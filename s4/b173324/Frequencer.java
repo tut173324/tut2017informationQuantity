@@ -2,10 +2,21 @@ package s4.b173324; // Please modify to s4.Bnnnnnn, where nnnnnn is your student
 import java.lang.*;
 import s4.specification.*;
 
+/*周波数カウンタ
+interface FrequencerInterface {     // このインタフェースは、周波数カウンタの設計を提供します。
+    void setTarget(byte[]  target); // 検索するデータを設定します。
+    void setSpace(byte[]  space);  // 検索対象となるデータを設定します。
+    int frequency(); /TARGETが設定されていないか、TARGETの長さがゼロの場合は-1を返します
+                    //それ以外の場合は、SPACEが設定されていないか、スペースの長さがゼロの場合は0を返します。
+                    //それ以外の場合は、SPACEのTAGETの頻度を取得します。
+    int subByteFrequency(int start, int end);
+    // tagetのsubByteの頻度、つまりtarget [start]、taget [start + 1]、...、target [end-1]を取得します。
+    // STARTまたはENDの値が正しくない場合の動作は未定義です。
+*/
 /*
 interface FrequencerInterface {     // This interface provides the design for frequency counter.
-    void setTarget(byte[]  target); // set the data to search.
-    void setSpace(byte[]  space);  // set the data to be searched target from.
+    void setTarget(byte[]  target); // set the data to search.　
+    void setSpace(byte[]  space);  // set the data to be searched target from.　
     int frequency(); //It return -1, when TARGET is not set or TARGET's length is zero
                     //Otherwise, it return 0, when SPACE is not set or Space's length is zero
                     //Otherwise, get the frequency of TAGET in SPACE
@@ -15,8 +26,10 @@ interface FrequencerInterface {     // This interface provides the design for fr
 */
 
 
+
 public class Frequencer implements FrequencerInterface{
     // Code to Test, *warning: This code  contains intentional problem*
+    //テストするコード、*警告：このコードには意図的な問題が含まれています*
     byte [] myTarget;
     byte [] mySpace;
     public void setTarget(byte [] target) { myTarget = target;}
@@ -36,8 +49,13 @@ public class Frequencer implements FrequencerInterface{
     }
 
     // I know that here is a potential problem in the declaration.
+    //ここに宣言の潜在的な問題があることはわかっています。
     public int subByteFrequency(int start, int length) { 
 	// Not yet, but it is not currently used by anyone.
+    // まだ、しかし誰にも使われていません。
+
+
+
 	return -1;
     }
 

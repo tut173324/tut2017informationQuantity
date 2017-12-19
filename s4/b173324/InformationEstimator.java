@@ -5,14 +5,25 @@ import s4.specification.*;
 /* What is imported from s4.specification
 package s4.specification;
 public interface InformationEstimatorInterface{
-    void setTarget(byte target[]); // set the data for computing the information quantities
-    void setSpace(byte space[]); // set data for sample space to computer probability
-    double estimation(); // It returns 0.0 when the target is not set or Target's length is zero;
+    void setTarget(byte target[]); // set the data for computing the information quantities 情報量を計算するためのデータを設定する
+    void setSpace(byte space[]); // set data for sample space to computer probability サンプル空間のデータをコンピュータ確率に設定する
+    double estimation(); // It returns 0.0 when the target is not set or Target's length is zero; ターゲットが設定されていないか、ターゲットの長さがゼロの場合は0.0を返します。
 // It returns Double.MAX_VALUE, when the true value is infinite, or space is not set.
 // The behavior is undefined, if the true value is finete but larger than Double.MAX_VALUE.
 // Note that this happens only when the space is unreasonably large. We will encounter other problem anyway.
 // Otherwise, estimation of information quantity, 
 }                        
+*/
+/*日本語
+public interface InformationEstimatorInterface{
+    void setTarget(byte target[]); // 情報量を計算するためのデータを設定する
+    void setSpace(byte space[]); // サンプル空間のデータをコンピュータ確率に設定する
+    double estimation(); //ターゲットが設定されていないか、ターゲットの長さがゼロの場合は0.0を返します。
+// true値が無限大の場合、または空白が設定されていない場合は、Double.MAX_VALUEを返します。
+// true値がfineteでDouble.MAX_VALUEより大きい場合の動作は未定義です。
+// Note that this happens only when the space is unreasonably large. We will encounter other problem anyway.
+// Otherwise, estimation of information quantity, 
+}     
 */
 
 public class InformationEstimator implements InformationEstimatorInterface{
@@ -83,6 +94,7 @@ public class InformationEstimator implements InformationEstimatorInterface{
 	return value;
     }
 
+    //ここおそらくテスト
     public static void main(String[] args) {
 	InformationEstimator myObject;
 	double value;
