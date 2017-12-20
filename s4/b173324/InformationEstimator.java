@@ -52,6 +52,23 @@ public class InformationEstimator implements InformationEstimatorInterface{
     }
 
     public double estimation(){
+
+    if( myTarget == null ){
+    	return 0.0;
+    }
+    if( mySpace == null ){
+    	return Double.MAX_VALUE;
+    }
+    if( myTarget.length == 0 ){
+    	return 0.0;
+    }
+    if( mySpace.length == 0 ){
+    	return Double.MAX_VALUE;
+    }
+    if( myTarget.length > mySpace.length ){
+    	return Double.MAX_VALUE;
+    }
+
 	boolean [] partition = new boolean[myTarget.length+1];
 	int np;
 	np = 1<<(myTarget.length-1);

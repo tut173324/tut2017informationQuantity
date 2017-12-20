@@ -30,14 +30,26 @@ interface FrequencerInterface {     // This interface provides the design for fr
 public class Frequencer implements FrequencerInterface{
     // Code to Test, *warning: This code  contains intentional problem*
     //テストするコード、*警告：このコードには意図的な問題が含まれています*
-    byte [] myTarget;
-    byte [] mySpace;
+    byte [] myTarget ;//={-1};
+    byte [] mySpace ;//={0};
     public void setTarget(byte [] target) { myTarget = target;}
     public void setSpace(byte []space) { mySpace = space; }
     public int frequency() {
+        if(myTarget == null){
+            return -1;
+        }
+        if(mySpace == null){
+            return 0;
+        }
 	int targetLength = myTarget.length;
 	int spaceLength = mySpace.length;
 	int count = 0;
+    if(targetLength == 0){
+        return -1;
+    }
+    if(spaceLength == 0){
+        return 0;
+    }
 	for(int start = 0; start<spaceLength; start++) { // Is it OK?
 	    boolean abort = false;
 	    for(int i = 0; i<targetLength; i++) {
