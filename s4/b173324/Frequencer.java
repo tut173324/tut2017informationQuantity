@@ -44,6 +44,9 @@ public class Frequencer implements FrequencerInterface{
             suffixArray[i] = i;
         }
         //そーとここから
+        
+        //バブルソート
+        /*
         for(int i = 0; i < (suffixArray.length-1) ;i++ ){
             for(int j = (suffixArray.length-1) ; j>i ;j--){
                 if( suffixCompare(j-1,j) == 1 ){
@@ -53,10 +56,49 @@ public class Frequencer implements FrequencerInterface{
                 }
             }
         }
+        */
+        //バブルソートここまで   
+
+        printSuffixArray();
+
+        System.out.println("quick suffixArray.length-1:"+(suffixArray.length-1));
+        quick_sort(suffixArray,0,suffixArray.length-1);
+
         //そーとここまで
         printSuffixArray();
         //ここまで
     }
+
+    public void quick_sort(int[] d,int left,int right){
+        if(left >= right ){
+            return;
+        }
+        int p = (int)((left+right)/2);
+        //System.out.println("pivot is "+p);
+        int l = left;
+        int r = right;
+        int temp;
+
+        while( l <= r ){
+            while( suffixCompare(l,p)== -1 ){//d[l] < d[p]
+                l++;
+            }
+            while( suffixCompare(r,p)== 1 ){//d[r] > d[p]
+                r--;
+            }
+            if( l <= r ){
+                temp = d[l];
+                d[l] = d[r];
+                d[r] = temp;
+                l++;
+                r--;
+            }
+        }
+        quick_sort(d,left,r);
+        quick_sort(d,l,right);
+    }
+
+
     
     public int frequency() {
         
@@ -129,7 +171,7 @@ public class Frequencer implements FrequencerInterface{
         for(int k = start; k < end; k++) {
             System.out.write(myTarget[k]);
         }
-        System.out.printf(": first = %d last1 = %d\n", first, last1);
+        //System.out.printf(": first = %d last1 = %d\n", first, last1);
         
         return last1 - first;
     }
@@ -151,6 +193,9 @@ public class Frequencer implements FrequencerInterface{
         }
     }
     //追加
+    // if suffix_i > suffix_j, it returns 1
+    // if suffix_i < suffix_j, it returns -1 
+    // if suffix_i = suffix_j, it returns 0;
     private int suffixCompare(int i,int j){
         int si = suffixArray[i];
         int sj = suffixArray[j];
