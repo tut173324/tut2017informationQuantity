@@ -59,13 +59,13 @@ public class Frequencer implements FrequencerInterface{
         */
         //バブルソートここまで   
 
-        printSuffixArray();
+        //printSuffixArray();
 
         //System.out.println("quick suffixArray.length-1:"+(suffixArray.length-1));
         quick_sort(suffixArray,0,suffixArray.length-1);
 
         //そーとここまで
-        printSuffixArray();
+        //printSuffixArray();
         //ここまで
     }
 
