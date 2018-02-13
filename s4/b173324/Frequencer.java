@@ -61,7 +61,7 @@ public class Frequencer implements FrequencerInterface{
 
         printSuffixArray();
 
-        System.out.println("quick suffixArray.length-1:"+(suffixArray.length-1));
+        //System.out.println("quick suffixArray.length-1:"+(suffixArray.length-1));
         quick_sort(suffixArray,0,suffixArray.length-1);
 
         //そーとここまで
@@ -70,34 +70,42 @@ public class Frequencer implements FrequencerInterface{
     }
 
     public void quick_sort(int[] d,int left,int right){
-        if(left >= right ){
-            return;
-        }
-        int p = (int)((left+right)/2);
+        
+        if(left < right ){
+            
+        
+        int p = partition(d,left,right);
         //System.out.println("pivot is "+p);
-        int l = left;
-        int r = right;
-        int temp;
+        int l = p+1;
+        int r = p-1;
 
-        while( l <= r ){
-            while( suffixCompare(l,p)== -1 ){//d[l] < d[p]
-                l++;
-            }
-            while( suffixCompare(r,p)== 1 ){//d[r] > d[p]
-                r--;
-            }
-            if( l <= r ){
-                temp = d[l];
-                d[l] = d[r];
-                d[r] = temp;
-                l++;
-                r--;
-            }
-        }
         quick_sort(d,left,r);
         quick_sort(d,l,right);
+        
+        return;
+        }
+        
+
     }
 
+    public int partition( int[] d,int left,int right){
+        int piv = left;
+        int tmp;
+        for(int i=left+1; i <= right ;i++ ){
+            if( suffixCompare(left,i) == 1 ){
+                piv++;
+                tmp = d[piv];
+                d[piv] = d[i];
+                d[i] = tmp;
+            }
+        }
+        tmp = d[piv];
+        d[piv] = d[left];
+        d[left] = tmp;
+
+        return piv;
+
+    }
 
     
     public int frequency() {
@@ -235,26 +243,41 @@ public class Frequencer implements FrequencerInterface{
     //ここから
     private int targetCompare(int i, int start, int end) {
         
-        int startIndex = subByteStartIndex(start, end);
-        
-        int endIndex = subByteEndIndex(start, end);
-        
-        if(startIndex <= i && i < endIndex) return 0;
-        if(i < startIndex) return -1;
-        if(endIndex <= i) return 1;
-        
-        return 2;
+        int si = suffixArray[i];
+
+        int n = end - start;
+
+        for( int k = 0;k < n ;k++){
+            if(mySpace[si + k] > myTarget[start + k]) return 1;
+            if(mySpace[si + k] < myTarget[start + k]) return -1;
+        }
+
+        return 0;
     }
     //ここまで
     //ここから
+    private boolean targetok(int ss,int ts,int te){
+        int s = suffixArray[ss];
+        for(int i=0;i < myTarget.length+s ;i++){
+            if(mySpace[i] == myTarget[ts + i - s] ){
+                if( (i-s) == te -1 ){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     private int subByteStartIndex(int start, int end) {
         
         //ソート済みのsuffixのインデックスを検索して返す
+        //線形探索
+        
         for(int i = 0; i < mySpace.length; i++) {
             int s = suffixArray[i];
-            for(int j = s; j < myTarget.length + s; j++) {
+            for(int j = s; (j < myTarget.length + s - start)&&(mySpace.length > j); j++) {
                 if(mySpace[j] == myTarget[start+j-s]) {
-                    if((j - s) == end - 1) {
+                    if((start + j - s) == end - 1) {
                         return i;
                     }
                 }
@@ -264,7 +287,27 @@ public class Frequencer implements FrequencerInterface{
             }
         }
         
+        //線形探索ここまで
+        /*
+        int l = start,r = end;
+        do{
+            int center = (l + r)/2;
+
+            if(targetCompare(center,start,end)==0){
+                return center;
+            }
+            else if(targetCompare(center,start,end)== 1 ){
+                l = center +1;
+            }
+            else if(targetCompare(center,start,end)== -1){
+                r = center -1;
+            }
+
+        }while(l <= r);
+
+        */
         return suffixArray.length;
+        
     }
     
     private int subByteEndIndex(int start, int end) {
@@ -278,11 +321,11 @@ public class Frequencer implements FrequencerInterface{
         for(int i = 0; i < mySpace.length; i++) {
             int s = suffixArray[i];
             
-            for(int j = s; j < myTarget.length + s; j++) {
+            for(int j = s;  (j < myTarget.length + s - start)&&(mySpace.length > j); j++) {
                 
                 flag2 = flag1;
                 if(mySpace[j] == myTarget[start+j-s]) {
-                    if((j - s) == end - 1) {
+                    if((start + j - s ) == end - 1) {
                         flag1 = 1;
                         
                     }
